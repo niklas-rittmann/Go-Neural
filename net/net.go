@@ -1,6 +1,9 @@
 package net
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+)
 
 // Struct for creating a Neural-Network
 type Net struct {
@@ -24,6 +27,7 @@ func (n *Net) Train(x, y Matrix, epochs int) {
 	for i := 0; i < epochs; i++ {
 		a_curr := n.forward(x)
 		n.backward(a_curr, y)
+		log.Printf("Cost in Epoch %d: %f", i, n.cost.calcCost(a_curr, y))
 	}
 }
 

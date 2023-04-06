@@ -32,7 +32,7 @@ func main() {
 		{0.5, 0.5},
 		{1, 1},
 	}.Transpose()
-	net := net.NewNet(0.4, net.MSE, layers)
+	net := net.NewNet(0.5, net.MSE, layers)
 	net.Train(x, y, 1000)
 	fmt.Printf("Expected Preds %v\n", y)
 	net.Predict(x)

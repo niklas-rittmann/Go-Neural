@@ -139,6 +139,17 @@ func diff(mat_1, mat_2 Matrix) Matrix {
 	return result
 }
 
+// Calc the sum of a matrix (used for cost)
+func sum(matrix Matrix) float64 {
+	sum := 0.0
+	for _, row := range matrix {
+		for _, val := range row {
+			sum += val
+		}
+	}
+	return sum
+}
+
 func initEmptyMatrix(n, m int) Matrix {
 	result := Matrix{}
 	for i := 0; i < n; i++ {
