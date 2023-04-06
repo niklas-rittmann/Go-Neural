@@ -1,4 +1,4 @@
-package main
+package net
 
 type CostFunc interface {
 	calcCost(y_hat, y Matrix) Matrix

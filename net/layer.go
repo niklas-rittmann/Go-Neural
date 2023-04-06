@@ -1,12 +1,12 @@
-package main
+package net
 
 import "math/rand"
 
 // This type for describing the net structure
 type LayerDef struct {
-	input_dim  int
-	output_dim int
-	activation ActFunction
+	Input_dim  int
+	Output_dim int
+	Activation ActFunction
 }
 
 // Type for each layer. Each layer consits if a weights and bias matrix as
@@ -21,9 +21,9 @@ type Layer struct {
 func InitLayers(layer_defs []LayerDef) []Layer {
 	layers := []Layer{}
 	for _, layer := range layer_defs {
-		weights := InitMatrix(layer.output_dim, layer.input_dim)
-		bias := InitMatrix(layer.output_dim, 1)
-		layers = append(layers, Layer{weights, bias, layer.activation})
+		weights := InitMatrix(layer.Output_dim, layer.Input_dim)
+		bias := InitMatrix(layer.Output_dim, 1)
+		layers = append(layers, Layer{weights, bias, layer.Activation})
 	}
 	return layers
 }

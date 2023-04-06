@@ -1,4 +1,4 @@
-package main
+package net
 
 import (
 	"reflect"
@@ -15,7 +15,7 @@ func (a Act) calcBackProp(matrix Matrix) Matrix {
 }
 
 func TestNetCreation(t *testing.T) {
-	layers := []LayerDef{{input_dim: 1, output_dim: 1, activation: Act{}}}
+	layers := []LayerDef{{Input_dim: 1, Output_dim: 1, Activation: Act{}}}
 	t.Run("Net creation learning rate", func(t *testing.T) {
 		got := NewNet(0.1, MSE, layers)
 		want := &Net{lr: 0.1}

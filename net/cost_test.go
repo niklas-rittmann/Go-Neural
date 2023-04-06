@@ -1,4 +1,4 @@
-package main
+package net
 
 import (
 	"reflect"
@@ -17,7 +17,7 @@ func TestCostFunctions(t *testing.T) {
 	})
 	t.Run("SqaredError Backprop", func(t *testing.T) {
 		got := mse_back(arr1, arr2)
-		want := Matrix{{2.0}, {-2.0}}
+		want := Matrix{{-2.0}, {2.0}}
 		if !reflect.DeepEqual(got, want) {
 			t.Errorf("got %f but wanted %f", got, want)
 		}
@@ -37,7 +37,7 @@ func TestCostFuncWrapper(t *testing.T) {
 	})
 	t.Run("SqaredError Activation", func(t *testing.T) {
 		got := fun.calcBackProp(arr1, arr2)
-		want := Matrix{{2.0}, {-2.0}}
+		want := Matrix{{-2.0}, {2.0}}
 		if !reflect.DeepEqual(got, want) {
 			t.Errorf("got %f but wanted %f", got, want)
 		}
