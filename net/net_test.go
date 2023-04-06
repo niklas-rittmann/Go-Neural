@@ -89,3 +89,28 @@ func TestSingleLayerForward(t *testing.T) {
 		}
 	})
 }
+
+func TestTrain(t *testing.T) {
+	layers := []LayerDef{{Input_dim: 2, Output_dim: 1, Activation: Sigmoid}}
+	x := Matrix{{1, 1}, {1, 1}}
+	y := Matrix{{0, 1}}
+	net := NewNet(20, MSE, layers)
+	net_copy_layers := net.layers[0].weights
+	net.Train(x, y, 1)
+	net_layers := net.layers[0].weights
+	if reflect.DeepEqual(net_layers, net_copy_layers) {
+		t.Errorf("Train did not have an effect %v, %v", net, net_copy_layers)
+	}
+}
+
+func TestPredict(t *testing.T) {
+	x := Matrix{{1, 1}, {1, 1}}
+	layers := []Layer{{weights: Matrix{{1.0, 1.0}}, bias: Matrix{{1.0, 1.0}}, activation: ReLU}}
+	cache := make(map[int]CacheVal)
+	net := &Net{lr: 1.0, layers: layers, cache: cache, cost: MSE}
+	got := net.Predict(x)
+	want := Matrix{{3, 3}}
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("Got %v but wanted %v", got, want)
+	}
+}

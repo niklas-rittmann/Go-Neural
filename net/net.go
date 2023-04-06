@@ -28,9 +28,10 @@ func (n *Net) Train(x, y Matrix, epochs int) {
 }
 
 // Perform Predict with the given net
-func (n *Net) Predict(x Matrix) {
+func (n *Net) Predict(x Matrix) Matrix {
 	a_curr := n.forward(x)
-	fmt.Printf("Predict %v", a_curr[0])
+	fmt.Printf("Predict %v", a_curr)
+	return a_curr
 }
 
 // Perform forward propagation
@@ -60,8 +61,8 @@ func (n *Net) backward(y_hat, y Matrix) {
 	var derivs BackPropRes
 
 	for layer_idx := len((*n).layers) - 1; layer_idx >= 0; layer_idx-- {
-		layer := (*n).layers[layer_idx]
-		cache := (*n).cache[layer_idx]
+		layer := n.layers[layer_idx]
+		cache := n.cache[layer_idx]
 		da_curr = da_prev
 		da_prev, derivs = single_layer_backward(da_curr, layer, cache)
 
