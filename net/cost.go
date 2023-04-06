@@ -20,11 +20,11 @@ func (c CostFunction) calcBackProp(y_hat, y Matrix) Matrix {
 }
 
 func mse(y_hat, y Matrix) Matrix {
-	return pow(diff(y, y_hat), 2.0)
+	return pow(diff(y_hat, y), 2.0)
 }
 
 func mse_back(y_hat, y Matrix) Matrix {
-	return multiply_by(diff(y, y_hat), 2.0)
+	return multiply_by(diff(y_hat, y), 2.0)
 }
 
 var MSE = CostFunction{mse, mse_back}

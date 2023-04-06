@@ -1,8 +1,6 @@
 package main
 
-import (
-	"log"
-)
+import "fmt"
 
 // Struct for creating a Neural-Network
 type Net struct {
@@ -25,12 +23,14 @@ type BackPropRes struct {
 func (n *Net) Train(x, y Matrix, epochs int) {
 	for i := 0; i < epochs; i++ {
 		a_curr := n.forward(x)
-		log.Printf("Preds after Epoch %d %v:", i, a_curr)
 		n.backward(a_curr, y)
-		//log.Printf("Layer after Epoch %d %v:", i, n.layers[0].weights)
-
 	}
+}
 
+// Perform Predict with the given net
+func (n *Net) Predict(x Matrix) {
+	a_curr := n.forward(x)
+	fmt.Printf("Predict %v", a_curr[0])
 }
 
 // Perform forward propagation
@@ -74,9 +74,8 @@ func (n *Net) backward(y_hat, y Matrix) {
 func single_layer_backward(da_curr Matrix, layer Layer, cache CacheVal) (Matrix, BackPropRes) {
 	_, y := da_curr.shape()
 	dz_curr := multiply(da_curr, layer.activation.calcBackProp(cache.z))
-	dz_curr = multiply_by(dz_curr, 1.0/float64(y))
 
-	dw_curr := dot_product(dz_curr, cache.a.Transpose())
+	dw_curr := multiply_by(dot_product(dz_curr, cache.a.Transpose()), 1.0/float64(y))
 
 	db_curr := multiply_by(row_sum(dz_curr), 1.0/float64(y))
 
