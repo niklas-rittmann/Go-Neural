@@ -1,4 +1,4 @@
-package net
+package main
 
 import (
 	"fmt"
@@ -8,8 +8,10 @@ import (
 func main() {
 
 	layers := []net.LayerDef{
-		{Input_dim: 2, Output_dim: 5, Activation: net.ReLU},
-		{Input_dim: 5, Output_dim: 1, Activation: net.Sigmoid},
+		{Input_dim: 2, Output_dim: 25, Activation: net.ReLU},
+		{Input_dim: 25, Output_dim: 50, Activation: net.Sigmoid},
+		{Input_dim: 50, Output_dim: 25, Activation: net.Sigmoid},
+		{Input_dim: 25, Output_dim: 1, Activation: net.Sigmoid},
 	}
 	// Train Example
 	//1, 2
