@@ -17,7 +17,7 @@ func (a Act) calcBackProp(matrix Matrix) Matrix {
 func TestNetCreation(t *testing.T) {
 	layers := []LayerDef{{input_dim: 1, output_dim: 1, activation: Act{}}}
 	t.Run("Net creation learning rate", func(t *testing.T) {
-		got := NewNet(0.1, layers)
+		got := NewNet(0.1, MSE, layers)
 		want := &Net{lr: 0.1}
 		if got.lr != want.lr {
 			t.Errorf("got %f but wanted %f", got.lr, want.lr)
@@ -31,7 +31,7 @@ func TestLayerForward(t *testing.T) {
 	layers := Layer{weights, bias, ReLU}
 	cache := map[int]CacheVal{}
 	t.Run("Single Layer forward with 1 Layer", func(t *testing.T) {
-		net := &Net{0.1, []Layer{layers}, cache}
+		net := &Net{0.1, []Layer{layers}, cache, MSE}
 		in := Matrix{{1.0}, {1.0}}
 		got := net.forward(in)
 		want := Matrix{{3.0}, {3.0}}
@@ -40,7 +40,7 @@ func TestLayerForward(t *testing.T) {
 		}
 	})
 	t.Run("Layer forward with 2 Layer", func(t *testing.T) {
-		net := &Net{0.1, []Layer{layers, layers}, cache}
+		net := &Net{0.1, []Layer{layers, layers}, cache, MSE}
 		in := Matrix{{1.0}, {1.0}}
 		got := net.forward(in)
 		want := Matrix{{7.0}, {7.0}}
@@ -49,7 +49,7 @@ func TestLayerForward(t *testing.T) {
 		}
 	})
 	t.Run("Cache forward with 2 Layer", func(t *testing.T) {
-		net := &Net{0.1, []Layer{layers, layers}, cache}
+		net := &Net{0.1, []Layer{layers, layers}, cache, MSE}
 		in := Matrix{{1.0}, {1.0}}
 		net.forward(in)
 		got := len(net.cache)

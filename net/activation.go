@@ -15,13 +15,13 @@ type ActivationFunction struct {
 }
 
 func (a ActivationFunction) calcActivation(matrix Matrix) Matrix {
-	return activation_wrapper(matrix, a.activation_func)
+	return wrapper(matrix, a.activation_func)
 }
 func (a ActivationFunction) calcBackProp(matrix Matrix) Matrix {
-	return [][]float64{}
+	return wrapper(matrix, a.backprop_func)
 }
 
-func activation_wrapper(matrix Matrix, fn activation) Matrix {
+func wrapper(matrix Matrix, fn activation) Matrix {
 	activated_matrix := Matrix{}
 	for _, row := range matrix {
 		activated_row := []float64{}
@@ -37,8 +37,8 @@ func activation_wrapper(matrix Matrix, fn activation) Matrix {
 func sigmoid(val float64) float64 {
 	return 1 / (1 + math.Exp(-val))
 }
-func sigmoid_back(val float64) float64 {
-	return 1 / (1 + math.Exp(-val))
+func sigmoid_deriv(val float64) float64 {
+	return sigmoid(val) * (1 - sigmoid(val))
 }
 
 func relu(val float64) float64 {
@@ -54,5 +54,5 @@ func relu_back(val float64) float64 {
 	return val
 }
 
-var Sigmoid = ActivationFunction{sigmoid, sigmoid_back}
+var Sigmoid = ActivationFunction{sigmoid, sigmoid_deriv}
 var ReLU = ActivationFunction{relu, relu_back}

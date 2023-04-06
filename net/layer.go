@@ -21,8 +21,8 @@ type Layer struct {
 func InitLayers(layer_defs []LayerDef) []Layer {
 	layers := []Layer{}
 	for _, layer := range layer_defs {
-		weights := InitMatrix(layer.input_dim, layer.output_dim)
-		bias := InitMatrix(layer.input_dim, 1)
+		weights := InitMatrix(layer.output_dim, layer.input_dim)
+		bias := InitMatrix(layer.output_dim, 1)
 		layers = append(layers, Layer{weights, bias, layer.activation})
 	}
 	return layers
