@@ -5,17 +5,8 @@ import (
 	"testing"
 )
 
-type Act struct{}
-
-func (a Act) calcActivation(matrix Matrix) Matrix {
-	return make([][]float64, 1)
-}
-func (a Act) calcBackProp(matrix Matrix) Matrix {
-	return make([][]float64, 1)
-}
-
 func TestNetCreation(t *testing.T) {
-	layers := []LayerDef{{Input_dim: 1, Output_dim: 1, Activation: Act{}}}
+	layers := []LayerDef{{Input_dim: 1, Output_dim: 1, Activation: ActivationFunction{}}}
 	t.Run("Net creation learning rate", func(t *testing.T) {
 		got := NewNet(0.1, MSE, layers)
 		want := &Net{lr: 0.1}

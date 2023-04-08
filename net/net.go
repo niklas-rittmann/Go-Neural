@@ -10,7 +10,7 @@ type Net struct {
 	lr     float64
 	layers []Layer
 	cache  map[int]CacheVal
-	cost   CostFunc
+	cost   CostFunction
 }
 
 type CacheVal struct {
@@ -89,7 +89,7 @@ func single_layer_backward(da_curr Matrix, layer Layer, cache CacheVal) (Matrix,
 }
 
 // Create a new Net based on the provided input
-func NewNet(lr float64, cost CostFunc, layer_defs []LayerDef) *Net {
+func NewNet(lr float64, cost CostFunction, layer_defs []LayerDef) *Net {
 	layers := InitLayers(layer_defs)
 	cache := make(map[int]CacheVal)
 	return &Net{lr: lr, layers: layers, cache: cache, cost: cost}

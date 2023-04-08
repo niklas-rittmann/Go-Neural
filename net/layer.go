@@ -6,7 +6,7 @@ import "math/rand"
 type LayerDef struct {
 	Input_dim  int
 	Output_dim int
-	Activation ActFunction
+	Activation ActivationFunction
 }
 
 // Type for each layer. Each layer consits if a weights and bias matrix as
@@ -14,7 +14,7 @@ type LayerDef struct {
 type Layer struct {
 	weights    Matrix
 	bias       Matrix
-	activation ActFunction
+	activation ActivationFunction
 }
 
 // Function to create layers from definition

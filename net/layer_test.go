@@ -1,9 +1,12 @@
 package net
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
 func TestInitLayers(t *testing.T) {
-	layers := []LayerDef{{Input_dim: 4, Output_dim: 3, Activation: Act{}}}
+	layers := []LayerDef{{Input_dim: 4, Output_dim: 3, Activation: ActivationFunction{}}}
 	t.Run("Num of arrays", func(t *testing.T) {
 		got := len(InitLayers(layers))
 		want := 1
@@ -14,7 +17,7 @@ func TestInitLayers(t *testing.T) {
 	t.Run("Activation stil lthe same", func(t *testing.T) {
 		got := InitLayers(layers)[0].activation
 		want := layers[0].Activation
-		if got != want {
+		if !reflect.DeepEqual(got, want) {
 			t.Errorf("got %v but wanted %v", got, want)
 		}
 	})

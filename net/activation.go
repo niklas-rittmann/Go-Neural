@@ -2,11 +2,6 @@ package net
 
 import "math"
 
-type ActFunction interface {
-	calcActivation(matrix Matrix) Matrix
-	calcBackProp(matrix Matrix) Matrix
-}
-
 type activation func(float64) float64
 
 type ActivationFunction struct {
