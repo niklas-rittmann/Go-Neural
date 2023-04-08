@@ -50,20 +50,6 @@ func dot_product(mat_1, mat_2 Matrix) Matrix {
 	return result
 }
 
-// Perform elementwise multiplikation
-func multiply(mat_1, mat_2 Matrix) Matrix {
-	y, x := mat_1.shape()
-	result := initEmptyMatrix(y, x)
-	for row := 0; row < y; row++ {
-		for col := 0; col < x; col++ {
-			mat_1_val := mat_1[row][col]
-			mat_2_val := mat_2[row][col]
-			result[row][col] = mat_1_val * mat_2_val
-		}
-	}
-	return result
-}
-
 // Calc the sum of each row (Transforms 2x3 into 2x1)
 func row_sum(matrix Matrix) Matrix {
 	result := Matrix{}
@@ -97,21 +83,45 @@ func pow(matrix Matrix, factor float64) Matrix {
 	return matrix
 }
 
+// Perform elementwise multiplikation
+func multiply(mat_1, mat_2 Matrix) Matrix {
+	fn := func(x, y float64) float64 { return x * y }
+	return elementwise_matrix_op(mat_1, mat_2, fn)
+}
+
+// Perform elementwise multiplikation
+func divide(mat_1, mat_2 Matrix) Matrix {
+	fn := func(x, y float64) float64 { return x / y }
+	return elementwise_matrix_op(mat_1, mat_2, fn)
+}
+
 // Add two matrices together
+// Subtract two matrices together
 func add(mat_1, mat_2 Matrix) Matrix {
-	result := Matrix{}
-	for row_idx, row := range mat_1 {
-		row_vals := []float64{}
-		for col_idx, mat1_val := range row {
-			sum := mat1_val + mat_2[row_idx][col_idx]
-			row_vals = append(row_vals, sum)
+	fn := func(x, y float64) float64 { return x + y }
+	return elementwise_matrix_op(mat_1, mat_2, fn)
+}
+
+// Subtract two matrices together
+func diff(mat_1, mat_2 Matrix) Matrix {
+	fn := func(x, y float64) float64 { return x - y }
+	return elementwise_matrix_op(mat_1, mat_2, fn)
+}
+
+func elementwise_matrix_op(mat_1, mat_2 Matrix, fn func(x, y float64) float64) Matrix {
+	y, x := mat_1.shape()
+	result := initEmptyMatrix(y, x)
+	for row := 0; row < y; row++ {
+		for col := 0; col < x; col++ {
+			mat_1_val := mat_1[row][col]
+			mat_2_val := mat_2[row][col]
+			result[row][col] = fn(mat_1_val, mat_2_val)
 		}
-		result = append(result, row_vals)
 	}
 	return result
 }
 
-// Add two matrices together
+// Add a vector to matrix
 func add_vector(mat_1, mat_2 Matrix) Matrix {
 	result := Matrix{}
 	for row_idx, row := range mat_1 {
@@ -119,20 +129,6 @@ func add_vector(mat_1, mat_2 Matrix) Matrix {
 		for _, mat1_val := range row {
 			sum := mat1_val + mat_2[row_idx][0]
 			row_vals = append(row_vals, sum)
-		}
-		result = append(result, row_vals)
-	}
-	return result
-}
-
-// Subtract two matrices together
-func diff(mat_1, mat_2 Matrix) Matrix {
-	result := Matrix{}
-	for row_idx, row := range mat_1 {
-		row_vals := []float64{}
-		for col_idx, mat1_val := range row {
-			diff := mat1_val - mat_2[row_idx][col_idx]
-			row_vals = append(row_vals, diff)
 		}
 		result = append(result, row_vals)
 	}

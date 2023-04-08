@@ -71,6 +71,16 @@ func TestMatrixMultiplication(t *testing.T) {
 		t.Errorf("got %#v but wanted %#v", got, want)
 	}
 }
+
+func TestMatrixDivide(t *testing.T) {
+	mat_1 := Matrix{{2.0, 4.0, 6.0}, {6.0, 8.0, 10.0}}
+	mat_2 := Matrix{{2.0, 2.0, 2.0}, {2.0, 2.0, 5.0}}
+	got := divide(mat_1, mat_2)
+	want := Matrix{{1.0, 2.0, 3.0}, {3.0, 4.0, 2.0}}
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("got %#v but wanted %#v", got, want)
+	}
+}
 func TestMatrixPow(t *testing.T) {
 	arr := Matrix{{1.0, 2.0, 3.0}, {1.0, 2.0, 3.0}}
 	factor := 2.0
