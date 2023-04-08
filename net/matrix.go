@@ -96,7 +96,6 @@ func divide(mat_1, mat_2 Matrix) Matrix {
 }
 
 // Add two matrices together
-// Subtract two matrices together
 func add(mat_1, mat_2 Matrix) Matrix {
 	fn := func(x, y float64) float64 { return x + y }
 	return elementwise_matrix_op(mat_1, mat_2, fn)
