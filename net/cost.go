@@ -1,23 +1,18 @@
 package net
 
-type CostFunc interface {
-	calcCost(y_hat, y Matrix) float64
-	calcBackProp(y_hat, y Matrix) Matrix
-}
-
-type back_prop func(Matrix, Matrix) Matrix
-type cost func(Matrix, Matrix) float64
+type BackProp func(Matrix, Matrix) Matrix
+type Cost func(Matrix, Matrix) float64
 
 type CostFunction struct {
-	cost_func     cost
-	backprop_func back_prop
+	CostFunc     Cost
+	BackpropFunc BackProp
 }
 
-func (c CostFunction) calcCost(y_hat, y Matrix) float64 {
-	return c.cost_func(y_hat, y)
+func (c CostFunction) CalcCost(y_hat, y Matrix) float64 {
+	return c.CostFunc(y_hat, y)
 }
 func (c CostFunction) calcBackProp(y_hat, y Matrix) Matrix {
-	return c.backprop_func(y_hat, y)
+	return c.BackpropFunc(y_hat, y)
 }
 
 func mse(y_hat, y Matrix) float64 {

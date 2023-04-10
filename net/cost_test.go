@@ -29,7 +29,7 @@ func TestCostFuncWrapper(t *testing.T) {
 	arr2 := Matrix{{2.0}, {1.0}}
 	fun := CostFunction{mse, mse_back}
 	t.Run("SqaredError Activation", func(t *testing.T) {
-		got := fun.calcCost(arr1, arr2)
+		got := fun.CalcCost(arr1, arr2)
 		want := 2.0
 		if !reflect.DeepEqual(got, want) {
 			t.Errorf("got %f but wanted %f", got, want)

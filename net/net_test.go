@@ -9,9 +9,9 @@ func TestNetCreation(t *testing.T) {
 	layers := []LayerDef{{Input_dim: 1, Output_dim: 1, Activation: ActivationFunction{}}}
 	t.Run("Net creation learning rate", func(t *testing.T) {
 		got := NewNet(0.1, MSE, layers)
-		want := &Net{lr: 0.1}
-		if got.lr != want.lr {
-			t.Errorf("got %f but wanted %f", got.lr, want.lr)
+		want := &Net{Lr: 0.1}
+		if got.Lr != want.Lr {
+			t.Errorf("got %f but wanted %f", got.Lr, want.Lr)
 		}
 	})
 }
@@ -86,9 +86,9 @@ func TestTrain(t *testing.T) {
 	x := Matrix{{1, 1}, {1, 1}}
 	y := Matrix{{0, 1}}
 	net := NewNet(20, MSE, layers)
-	net_copy_layers := net.layers[0].weights
+	net_copy_layers := net.Layers[0].Weights
 	net.Train(x, y, 1)
-	net_layers := net.layers[0].weights
+	net_layers := net.Layers[0].Weights
 	if reflect.DeepEqual(net_layers, net_copy_layers) {
 		t.Errorf("Train did not have an effect %v, %v", net, net_copy_layers)
 	}
@@ -96,9 +96,9 @@ func TestTrain(t *testing.T) {
 
 func TestPredict(t *testing.T) {
 	x := Matrix{{1, 1}, {1, 1}}
-	layers := []Layer{{weights: Matrix{{1.0, 1.0}}, bias: Matrix{{1.0, 1.0}}, activation: ReLU}}
+	layers := []Layer{{Weights: Matrix{{1.0, 1.0}}, Bias: Matrix{{1.0, 1.0}}, Activation: ReLU}}
 	cache := make(map[int]CacheVal)
-	net := &Net{lr: 1.0, layers: layers, cache: cache, cost: MSE}
+	net := &Net{Lr: 1.0, Layers: layers, cache: cache, Cost: MSE}
 	got := net.Predict(x)
 	want := Matrix{{3, 3}}
 	if !reflect.DeepEqual(got, want) {
