@@ -42,9 +42,7 @@ func (l *Layer) UnmarshalJSON(data []byte) error {
 	}{
 		Alias: (*Alias)(l),
 	}
-	if err := json.Unmarshal(data, &aux); err != nil {
-		return err
-	}
+	json.Unmarshal(data, &aux)
 	l.Activation.ActivationFunc = ActPersistMap[aux.Activation]
 	l.Activation.BackpropFunc = ActBackPersistMap[aux.ActivationBackprop]
 	return nil
