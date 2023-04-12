@@ -37,7 +37,7 @@ func StoreActInMap(fns []ActivationFunction) {
 
 // Build store
 func BuildStore() {
-	StoreCostInMap([]CostFunction{MSE})
+	StoreCostInMap([]CostFunction{QuadraticLoss})
 	StoreActInMap([]ActivationFunction{ReLU, Sigmoid})
 	log.Printf("%v", ActPersistMap)
 }
