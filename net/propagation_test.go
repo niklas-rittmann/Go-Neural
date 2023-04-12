@@ -11,7 +11,7 @@ func TestLayerForward(t *testing.T) {
 	layers := Layer{weights, bias, ReLU}
 	cache := map[int]CacheVal{}
 	t.Run("Single Layer forward with 1 Layer", func(t *testing.T) {
-		net := &Net{0.1, []Layer{layers}, cache, QuadraticLoss}
+		net := &Net{0.1, []Layer{layers}, cache, QuadraticCost}
 		in := Matrix{{1.0}, {1.0}}
 		got := net.forward(in)
 		want := Matrix{{3.0}, {3.0}}
@@ -20,7 +20,7 @@ func TestLayerForward(t *testing.T) {
 		}
 	})
 	t.Run("Layer forward with 2 Layer", func(t *testing.T) {
-		net := &Net{0.1, []Layer{layers, layers}, cache, QuadraticLoss}
+		net := &Net{0.1, []Layer{layers, layers}, cache, QuadraticCost}
 		in := Matrix{{1.0}, {1.0}}
 		got := net.forward(in)
 		want := Matrix{{7.0}, {7.0}}
@@ -29,7 +29,7 @@ func TestLayerForward(t *testing.T) {
 		}
 	})
 	t.Run("Cache forward with 2 Layer", func(t *testing.T) {
-		net := &Net{0.1, []Layer{layers, layers}, cache, QuadraticLoss}
+		net := &Net{0.1, []Layer{layers, layers}, cache, QuadraticCost}
 		in := Matrix{{1.0}, {1.0}}
 		net.forward(in)
 		got := len(net.cache)
@@ -74,7 +74,7 @@ func TestTrain(t *testing.T) {
 	layers := []LayerDef{{Input_dim: 2, Output_dim: 1, Activation: Sigmoid}}
 	x := Matrix{{1, 1}, {1, 1}}
 	y := Matrix{{0, 1}}
-	net := NewNet(20, QuadraticLoss, layers)
+	net := NewNet(20, QuadraticCost, layers)
 	net_copy_layers := net.Layers[0].Weights
 	net.Train(x, y, 1)
 	net_layers := net.Layers[0].Weights
@@ -87,7 +87,7 @@ func TestPredict(t *testing.T) {
 	x := Matrix{{1, 1}, {1, 1}}
 	layers := []Layer{{Weights: Matrix{{1.0, 1.0}}, Bias: Matrix{{1.0, 1.0}}, Activation: ReLU}}
 	cache := make(map[int]CacheVal)
-	net := &Net{Lr: 1.0, Layers: layers, cache: cache, Cost: QuadraticLoss}
+	net := &Net{Lr: 1.0, Layers: layers, cache: cache, Cost: QuadraticCost}
 	got := net.Predict(x)
 	want := Matrix{{3, 3}}
 	if !reflect.DeepEqual(got, want) {

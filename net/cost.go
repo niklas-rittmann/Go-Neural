@@ -23,4 +23,4 @@ func quadratic_loss_back(y_hat, y Matrix) Matrix {
 	return multiply_by(diff(y_hat, y), 2.0)
 }
 
-var QuadraticLoss = CostFunction{quadratic_loss, quadratic_loss_back}
+var QuadraticCost = CostFunction{quadratic_loss, quadratic_loss_back}
