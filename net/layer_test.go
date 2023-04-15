@@ -15,7 +15,7 @@ func TestInitLayers(t *testing.T) {
 		}
 	})
 	t.Run("Activation stil lthe same", func(t *testing.T) {
-		got := InitLayers(layers)[0].activation
+		got := InitLayers(layers)[0].Activation
 		want := layers[0].Activation
 		if !reflect.DeepEqual(got, want) {
 			t.Errorf("got %v but wanted %v", got, want)

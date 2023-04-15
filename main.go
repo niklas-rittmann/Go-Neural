@@ -32,8 +32,9 @@ func main() {
 		{0.5, 0.5},
 		{1, 1},
 	}.Transpose()
-	net := net.NewNet(0.5, net.MSE, layers)
-	net.Train(x, y, 1000)
+	model := net.NewNet(0.5, net.QuadraticCost, layers)
+	model.Train(x, y, 10)
+	model.ToFile("2layer.json")
 	fmt.Printf("Expected Preds %v\n", y)
-	net.Predict(x)
+	model.Predict(x)
 }

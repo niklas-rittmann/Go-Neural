@@ -1,6 +1,9 @@
 package net
 
-import "math/rand"
+import (
+	"encoding/json"
+	"math/rand"
+)
 
 // This type for describing the net structure
 type LayerDef struct {
@@ -12,9 +15,37 @@ type LayerDef struct {
 // Type for each layer. Each layer consits if a weights and bias matrix as
 // well as an activation function
 type Layer struct {
-	weights    Matrix
-	bias       Matrix
-	activation ActivationFunction
+	Weights    Matrix
+	Bias       Matrix
+	Activation ActivationFunction
+}
+
+func (l *Layer) MarshalJSON() ([]byte, error) {
+	type Alias Layer
+	return json.Marshal(&struct {
+		Activation         string
+		ActivationBackprop string
+		*Alias
+	}{
+		Activation:         nameFromFunc(l.Activation.ActivationFunc),
+		ActivationBackprop: nameFromFunc(l.Activation.BackpropFunc),
+		Alias:              (*Alias)(l),
+	})
+}
+
+func (l *Layer) UnmarshalJSON(data []byte) error {
+	type Alias Layer
+	aux := &struct {
+		Activation         string
+		ActivationBackprop string
+		*Alias
+	}{
+		Alias: (*Alias)(l),
+	}
+	json.Unmarshal(data, &aux)
+	l.Activation.ActivationFunc = ActPersistMap[aux.Activation]
+	l.Activation.BackpropFunc = ActBackPersistMap[aux.ActivationBackprop]
+	return nil
 }
 
 // Function to create layers from definition

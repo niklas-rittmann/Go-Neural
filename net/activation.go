@@ -2,21 +2,21 @@ package net
 
 import "math"
 
-type activation func(float64) float64
+type Activation func(float64) float64
 
 type ActivationFunction struct {
-	activation_func activation
-	backprop_func   activation
+	ActivationFunc Activation
+	BackpropFunc   Activation
 }
 
 func (a ActivationFunction) calcActivation(matrix Matrix) Matrix {
-	return wrapper(matrix, a.activation_func)
+	return wrapper(matrix, a.ActivationFunc)
 }
 func (a ActivationFunction) calcBackProp(matrix Matrix) Matrix {
-	return wrapper(matrix, a.backprop_func)
+	return wrapper(matrix, a.BackpropFunc)
 }
 
-func wrapper(matrix Matrix, fn activation) Matrix {
+func wrapper(matrix Matrix, fn Activation) Matrix {
 	activated_matrix := Matrix{}
 	for _, row := range matrix {
 		activated_row := []float64{}
