@@ -16,11 +16,12 @@ The setup for Go-Neural is fairly simple. You just have to follow these steps:
 >If rows and columns are switched, you can use the `Transpose` method. 
 
 4. Train your model by setting a number of epochs to train.
-5. Save your model in json Format via ´model.ToFile`
+5. Save your model in json Format via `model.ToFile`
 6. Predict new samples with your newly trained model. 
 
 ## To-Dos:
 - [ ] Add a "sanity check for the matrix dimensions
+- [ ] Add Error handling with usefull error messages
 - [x] Add methods to persist models on disk
 - [ ] Add a visualizer for the training process (e.g. a loss curve) 
 
